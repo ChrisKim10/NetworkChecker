@@ -31,6 +31,22 @@
 
         <Grid Grid.Row="0" Grid.Column="1">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <TextBlock Text="측정주기 " Foreground="White" VerticalAlignment="Center"/>
+                <ComboBox x:Name="cbCycle" Margin="2" FontSize="14" IsEditable="False"
+                          Height="30" Width="50"
+                          HorizontalAlignment="Left"
+                          HorizontalContentAlignment="Center"
+                          SelectionChanged="cbCycle_SelectionChanged">
+                    <ComboBoxItem Content="1"></ComboBoxItem>
+                    <ComboBoxItem Content="3"></ComboBoxItem>
+                    <ComboBoxItem Content="5" IsSelected="True"></ComboBoxItem>
+                    <ComboBoxItem Content="10"></ComboBoxItem>
+                    <ComboBoxItem Content="20"/>
+                    <ComboBoxItem Content="30"/>
+                    <ComboBoxItem Content="40"/>
+                    <ComboBoxItem Content="50"/>
+                    <ComboBoxItem Content="60"/>
+                </ComboBox>
                 <Button x:Name="btnItemClear" Content="선택삭제" Margin="2"
                         Width="100" Height="28"
                         Click="btnItemClear_Click"/>

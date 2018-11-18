@@ -34,6 +34,7 @@ namespace NetworkChecker
     /// </summary>
     public partial class MainWindow
     {
+        static double cycle = 5;
         LogUnitViewModel logUnitViewModel = new LogUnitViewModel();
 
         public MainWindow()
@@ -84,7 +85,7 @@ namespace NetworkChecker
                     }
                 }));
 
-               Thread.Sleep(TimeSpan.FromSeconds(5));
+               Thread.Sleep(TimeSpan.FromSeconds(cycle));
             }
         }
 
@@ -155,6 +156,17 @@ namespace NetworkChecker
                     AddLog("네트워크 끊김", false);
                 }
             };
+        }
+
+        private void cbCycle_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var comboBox = sender as ComboBox;
+            string str = (comboBox.SelectedItem as ComboBoxItem).Content as string;
+
+            if (string.IsNullOrEmpty(str))
+                return;
+
+            cycle = double.Parse(str);
         }
 
 
