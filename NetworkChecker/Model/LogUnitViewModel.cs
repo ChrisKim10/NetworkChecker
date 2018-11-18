@@ -79,7 +79,7 @@ namespace NetworkChecker.Model
         public void Clear()
         {
             this.Items.Clear();
-            this.StatItems.Clear();
+            //this.StatItems.Clear();
         }
 
         public void SelectedClear(LogUnit start, LogUnit End)
