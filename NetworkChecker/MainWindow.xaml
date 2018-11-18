@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NetworkChecker"
         mc:Ignorable="d"
-        Title="네트워크상태" Height="450" Width="800" 
+        Title="네트워크상태" Height="450" Width="640" 
         FontFamily="AppleSDGothicNeoSB00"
         TitleForeground="WhiteSmoke"
         WindowTitleBrush="Chocolate">
@@ -20,18 +20,46 @@
             <RowDefinition Height="32"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="0.5*"/>
+        </Grid.ColumnDefinitions>
 
-        <Grid>
+        <Grid Grid.Row="0" Grid.Column="0">
+            
+        </Grid>
+
+        <Grid Grid.Row="0" Grid.Column="1">
             <Button x:Name="btnClear" Content="CLEAR" Margin="2"
                     Width="100" HorizontalAlignment="Right"
                     Click="btnClear_Click"/>
         </Grid>
-        
-        <ListView x:Name="lvLog" Grid.Row="1"></ListView>
 
-        <DataGrid x:Name="lineDataGrid" Grid.Row="1" BorderThickness="0"
+        <DataGrid x:Name="StatDataGrid" Grid.Row="1" Grid.Column="0"
+                  BorderThickness="0"
                   FontSize="11"
-                  SelectionMode="Single" 
+                  SelectionMode="Extended" 
+                  SelectionUnit="FullRow" 
+                  AutoGenerateColumns="False" 
+                  GridLinesVisibility="All"
+                  IsReadOnly="True" 
+                  CanUserSortColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="NO" Width="40" Binding="{Binding Index}"/>
+                <DataGridTextColumn Header="TIME" Width="90" Binding="{Binding Time}"/>
+                <DataGridTextColumn Header="CONTENT" Width="*" Binding="{Binding Content}">
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Border Grid.Row="1" Grid.Column="0" BorderThickness="0,0,1,0" 
+                BorderBrush="Black" >
+        </Border>
+
+        <DataGrid x:Name="lineDataGrid" Grid.Row="1" Grid.Column="1"
+                  BorderThickness="0"
+                  FontSize="11"
+                  SelectionMode="Extended" 
                   SelectionUnit="FullRow" 
                   AutoGenerateColumns="False" 
                   GridLinesVisibility="All"

@@ -37,7 +37,7 @@ namespace NetworkChecker.Common
 
             }
 
-            return "IP를 체크할 수 없습니다";
+            return null;
         }
 
 

@@ -42,6 +42,7 @@ namespace NetworkChecker
             this.Loaded += MainWindow_Loaded;
 
             lineDataGrid.ItemsSource = logUnitViewModel.Items;
+            StatDataGrid.ItemsSource = logUnitViewModel.StatItems;
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -49,8 +50,15 @@ namespace NetworkChecker
             AddLog("프로그램이 시작되었습니다.");
 
             string ip = ComUtil.CheckPublicIP();
-            AddLog("IP: " + ip);
-
+            if(ip == null)
+            {
+                AddLog("IP를 알 수 없습니다" + ip, false);
+            }
+            else
+            {
+                AddLog("IP: " + ip);
+            }
+            
             NetWorkChange();
 
             Thread netcheckThread = new Thread(new ThreadStart(Run));
