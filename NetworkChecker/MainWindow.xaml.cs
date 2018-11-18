@@ -1,4 +1,5 @@
-﻿using NetworkChecker.Model;
+﻿using NetworkChecker.Common;
+using NetworkChecker.Model;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -33,9 +34,6 @@ namespace NetworkChecker
     /// </summary>
     public partial class MainWindow
     {
-
-        DispatcherTimer timer = new DispatcherTimer();
-
         LogUnitViewModel logUnitViewModel = new LogUnitViewModel();
 
         public MainWindow()
@@ -50,23 +48,14 @@ namespace NetworkChecker
         {
             AddLog("프로그램이 시작되었습니다.");
 
-            string ip = CheckPublicIP();
+            string ip = ComUtil.CheckPublicIP();
             AddLog("IP: " + ip);
-
-            //InitTimer();
 
             NetWorkChange();
 
-            Thread t1 = new Thread(new ThreadStart(Run));
-            t1.IsBackground = true;
-            t1.Start();
-        }
-
-        private void InitTimer()
-        {
-            timer.Interval = TimeSpan.FromSeconds(2);
-            timer.Tick += Timer_Tick;
-            timer.Start();
+            Thread netcheckThread = new Thread(new ThreadStart(Run));
+            netcheckThread.IsBackground = true;
+            netcheckThread.Start();
         }
 
         private void Run()
@@ -83,7 +72,7 @@ namespace NetworkChecker
                     }
                     else
                     {
-                        AddLog("네트워크 끊김 I");
+                        AddLog("네트워크 끊김 I", false);
                     }
                 }));
 
@@ -91,43 +80,14 @@ namespace NetworkChecker
             }
         }
 
-        private void Timer_Tick(object sender, EventArgs e)
+        private void AddLog(string str, bool bConn = true)
         {
-            bool bRet = IsInternetConnected();
-
-            if(bRet)
-            {
-                AddLog("네트워크 정상연결됨 I");
-            }
-            else
-            {
-                AddLog("네트워크 끊김 I");
-            }
-        }
-
-        private void AddLog(string str)
-        {
-            logUnitViewModel.Insert(str);
+            logUnitViewModel.Insert(str, bConn);
         }
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
             logUnitViewModel.Clear();
-        }
-
-        private void NetWorkChange()
-        {
-            NetworkChange.NetworkAvailabilityChanged += (s, ne) =>
-            {
-                if (ne.IsAvailable)
-                {
-                    AddLog("네트워크 정상연결됨");
-                }
-                else
-                {
-                    AddLog("네트워크 끊김");
-                }
-            };
         }
 
         public bool IsInternetConnected()
@@ -163,46 +123,46 @@ namespace NetworkChecker
             return true;
         }
 
-        private void lineDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void NetWorkChange()
         {
-
+            NetworkChange.NetworkAvailabilityChanged += (s, ne) =>
+            {
+                if (ne.IsAvailable)
+                {
+                    AddLog("네트워크 정상연결됨");
+                }
+                else
+                {
+                    AddLog("네트워크 끊김", false);
+                }
+            };
         }
 
-        private string CheckPublicIP()
+
+#if false //NOT USED
+        DispatcherTimer timer = new DispatcherTimer();
+
+        private void InitTimer()
         {
-            NetworkCheck();
-
-            WebClient wc = new WebClient();
-            try
-            {
-                string result = wc.DownloadString("http://checkip.dyndns.org");
-                string ip = result.Split(':')[1].Split('<')[0].Trim();
-
-                return ip;
-            }
-
-            catch(Exception e)
-            {
-
-            }
-
-            return "IP를 체크할 수 없습니다";
+            timer.Interval = TimeSpan.FromSeconds(2);
+            timer.Tick += Timer_Tick;
+            timer.Start();
         }
 
-        private void NetworkCheck()
+        private void Timer_Tick(object sender, EventArgs e)
         {
-            if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
+            bool bRet = IsInternetConnected();
+
+            if(bRet)
             {
-                AddLog("정상적으로 연결되었습니다");
+                AddLog("네트워크 정상연결됨 I");
             }
             else
             {
-                AddLog("네트워크를 이용할 수 없습니다");
+                AddLog("네트워크 끊김 I");
             }
-
-            IsInternetConnected();
         }
-
+#endif
 
     }
 }

@@ -60,6 +60,23 @@ namespace NetworkChecker.Model
             }
         }
 
+        private bool _isConnected;
+        public bool IsConnected
+        {
+            get
+            {
+                return _isConnected;
+            }
+            set
+            {
+                if (value != _isConnected)
+                {
+                    _isConnected = value;
+                    NotifyPropertyChanged(nameof(IsConnected));
+                }
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged(String propertyName)
         {

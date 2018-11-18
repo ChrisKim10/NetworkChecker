@@ -12,7 +12,7 @@
         WindowTitleBrush="Chocolate">
 
     <Controls:MetroWindow.Resources>
-
+        <local:StatusToColorConverter x:Key="StatusToColorConverter"/>
     </Controls:MetroWindow.Resources>
 
     <Grid Background="#1E1E1E">
@@ -36,12 +36,17 @@
                   AutoGenerateColumns="False" 
                   GridLinesVisibility="All"
                   IsReadOnly="True" 
-                  CanUserSortColumns="False" 
-                  SelectionChanged="lineDataGrid_SelectionChanged">
+                  CanUserSortColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="NO" Width="40" Binding="{Binding Index}"/>
                 <DataGridTextColumn Header="TIME" Width="90" Binding="{Binding Time}"/>
-                <DataGridTextColumn Header="CONTENT" Width="*" Binding="{Binding Content}"/>
+                <DataGridTextColumn Header="CONTENT" Width="*" Binding="{Binding Content}">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="Foreground" Value="{Binding Path=IsConnected, Converter={StaticResource StatusToColorConverter}}"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

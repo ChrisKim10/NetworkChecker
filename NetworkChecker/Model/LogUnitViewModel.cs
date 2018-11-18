@@ -20,24 +20,26 @@ namespace NetworkChecker.Model
             this.Items = new ObservableCollection<LogUnit>();
         }
 
-        public void Add(string content)
+        public void Add(string content, bool bConn = true)
         {
             LogUnit unit = new LogUnit();
             unit.Index = Index.ToString();
             unit.Content = content;
             unit.Time = DateTime.Now.ToLongTimeString();
+            unit.IsConnected = bConn;
 
             this.Items.Add(unit);
 
             Index++;
         }
 
-        public void Insert(string content)
+        public void Insert(string content, bool bConn = true)
         {
             LogUnit unit = new LogUnit();
             unit.Index = Index.ToString();
             unit.Content = content;
             unit.Time = DateTime.Now.ToLongTimeString();
+            unit.IsConnected = bConn;
 
             this.Items.Insert(0, unit);
 
