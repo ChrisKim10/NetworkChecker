@@ -28,7 +28,7 @@ namespace NetworkChecker.Model
         public void Add(string content, bool bConn = true)
         {
             LogUnit unit = new LogUnit();
-            unit.Index = Index.ToString();
+            unit.Index = Index;
             unit.Content = content;
             unit.Time = DateTime.Now.ToLongTimeString();
             unit.IsConnected = bConn;
@@ -41,7 +41,7 @@ namespace NetworkChecker.Model
         public void Insert(string content, bool bConn = true)
         {
             LogUnit unit = new LogUnit();
-            unit.Index = Index.ToString();
+            unit.Index = Index;
             unit.Content = content;
             unit.Time = DateTime.Now.ToLongTimeString();
             unit.IsConnected = bConn;
@@ -53,7 +53,7 @@ namespace NetworkChecker.Model
                 bCheckConnect = bConn;
 
                 LogUnit statUnit = new LogUnit();
-                statUnit.Index = Index.ToString();
+                statUnit.Index = Index;
                 if(bConn)
                 {
                     TimeSpan span = DateTime.Now - preDateTime;            
@@ -80,6 +80,18 @@ namespace NetworkChecker.Model
         {
             this.Items.Clear();
             this.StatItems.Clear();
+        }
+
+        public void SelectedClear(LogUnit start, LogUnit End)
+        {
+            int st = Math.Min(start.Index, End.Index);
+            int ed = Math.Max(start.Index, End.Index);
+
+            var removeItems = this.Items.Where(x => x.Index >= st && x.Index <= ed).ToList();
+            foreach(LogUnit unit in removeItems)
+            {
+                this.Items.Remove(unit);
+            }
         }
 
         public void Add(LogUnit unit)

@@ -30,9 +30,15 @@
         </Grid>
 
         <Grid Grid.Row="0" Grid.Column="1">
-            <Button x:Name="btnClear" Content="CLEAR" Margin="2"
-                    Width="100" HorizontalAlignment="Right"
-                    Click="btnClear_Click"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <Button x:Name="btnItemClear" Content="선택삭제" Margin="2"
+                        Width="100" Height="28"
+                        Click="btnItemClear_Click"/>
+                <Button x:Name="btnClear" Content="모두삭제" Margin="2"
+                        Width="100" Height="28"
+                        Click="btnAllClear_Click"/>
+            </StackPanel>
+
         </Grid>
 
         <DataGrid x:Name="StatDataGrid" Grid.Row="1" Grid.Column="0"

@@ -93,9 +93,20 @@ namespace NetworkChecker
             logUnitViewModel.Insert(str, bConn);
         }
 
-        private void btnClear_Click(object sender, RoutedEventArgs e)
+        private void btnAllClear_Click(object sender, RoutedEventArgs e)
         {
             logUnitViewModel.Clear();
+        }
+
+        private void btnItemClear_Click(object sender, RoutedEventArgs e)
+        {
+            if (lineDataGrid.SelectedItems != null)
+            {
+                LogUnit startUnit = lineDataGrid.SelectedItems[0] as LogUnit;
+                LogUnit endUnit = lineDataGrid.SelectedItems[lineDataGrid.SelectedItems.Count - 1] as LogUnit;
+
+                logUnitViewModel.SelectedClear(startUnit, endUnit);
+            }
         }
 
         public bool IsInternetConnected()

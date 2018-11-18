@@ -9,8 +9,8 @@ namespace NetworkChecker.Model
 {
     public class LogUnit : INotifyPropertyChanged
     {
-        private string _index;
-        public string Index
+        private int _index;
+        public int Index
         {
             get
             {
